@@ -11,16 +11,16 @@ var getAccessToken = function(callback) {
     callback(new Error('The AUTH0_DOMAIN is required in order to get an access token (verify your configuration).'));
   }
 
-  logger.debug('Fetching access token from https://' + env('AUTH0_DOMAIN') + '/oauth/token');
-
+  logger.debug('Fetching access token from https://' + env('AUTH0_DOMAIN') + '/connect/token');
+     
   var options = {
     method: 'POST',
-    url: 'https://' + env('AUTH0_DOMAIN') + '/oauth/token',
+    url: 'http://' + env('AUTH0_DOMAIN') + '/connect/token',
     headers: {
       'cache-control': 'no-cache',
-      'content-type': 'application/json'
+      'content-type': 'application/x-www-form-urlencoded'
     },
-    body: {
+    form: {
       audience: env('RESOURCE_SERVER'),
       grant_type: 'client_credentials',
       client_id: env('AUTH0_CLIENT_ID'),
@@ -30,10 +30,9 @@ var getAccessToken = function(callback) {
   };
 
   request(options, function(err, res, body) {
-    if (err || res.statusCode < 200 || res.statusCode >= 300) {
+    if (err || res.statusCode < 200 || res.statusCode >= 300) {      
       return callback(res && res.body || err);
     }
-
     callback(null, body.access_token);
   });
 }
@@ -48,6 +47,7 @@ getAccessToken(function(err, accessToken) {
   }
 
   logger.info('Getting directions to the Auth0 Office from the World Mappers API');
+  logger.info('accessToken:'+accessToken);
 
   // Call the Worldmappers API with the access token.
   var options = {

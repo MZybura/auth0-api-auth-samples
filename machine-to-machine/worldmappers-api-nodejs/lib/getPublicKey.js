@@ -12,11 +12,11 @@ function certToPEM (cert) {
 
 function getPublicKeyFromJwks(domain, callback) {
   var options = {
-    url: 'https://' + domain + '/.well-known/jwks.json',
+    url: 'http://' + domain + '/.well-known/openid-configuration/jwks',
     json: true
   };
 
-  logger.debug('Loading public key from: https://' + domain + '/.well-known/jwks.json')
+  logger.debug('Loading public key from: http://' + domain + '/.well-known/openid-configuration/jwks')
   request(options, function(err, res) {
     if (err || res.statusCode < 200 || res.statusCode >= 300) {
       return callback(res && res.body || err);

@@ -23,7 +23,7 @@ const jwtCheck = jwt({
   secret: getPublicKey(env('AUTH0_DOMAIN')),
   audience: env('RESOURCE_SERVER'),
   algorithms: [ 'RS256' ],
-  issuer: `https://${env('AUTH0_DOMAIN')}/`
+  issuer: `http://${env('AUTH0_DOMAIN')}`
 });
 
 /*

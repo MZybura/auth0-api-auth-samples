@@ -1,4 +1,4 @@
-{
-  "AUTH0_DOMAIN": "YOUR_DOMAIN",
+{  
+  "AUTH0_DOMAIN": "localhost:5000",
   "RESOURCE_SERVER": "urn:worldmappers"
 }
